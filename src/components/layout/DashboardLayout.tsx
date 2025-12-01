@@ -1,0 +1,186 @@
+import { useState } from "react";
+import { Link, useLocation, Outlet } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Menu,
+  Home,
+  Church,
+  User,
+  Settings,
+  History,
+  HelpCircle,
+  LogOut,
+  CreditCard,
+  Bell,
+  Wheat,
+  ChevronDown,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface DashboardLayoutProps {
+  children?: React.ReactNode;
+}
+
+const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const navItems = [
+    { icon: Home, label: "Home", path: "/dashboard" },
+    { icon: Church, label: "My Church", path: "/dashboard/church" },
+    { icon: User, label: "Profile", path: "/dashboard/profile" },
+    { icon: CreditCard, label: "Giving Settings", path: "/dashboard/settings" },
+    { icon: History, label: "Activity", path: "/dashboard/activity" },
+    { icon: HelpCircle, label: "Support", path: "/dashboard/support" },
+  ];
+
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full">
+      {/* Logo */}
+      <div className="p-6 border-b border-border">
+        <Link to="/dashboard" className="flex items-center gap-2">
+          <div className="w-9 h-9 rounded-lg bg-gradient-gold flex items-center justify-center">
+            <Wheat className="w-4 h-4 text-primary-foreground" />
+          </div>
+          <span className="font-display text-lg font-bold">Daily Bread</span>
+        </Link>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-auto p-4">
+        <ul className="space-y-1">
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <Link
+                to={item.path}
+                onClick={() => setSidebarOpen(false)}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200",
+                  isActive(item.path)
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                )}
+              >
+                <item.icon className="w-5 h-5" />
+                <span>{item.label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* User Card */}
+      <div className="p-4 border-t border-border">
+        <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+          <Avatar className="h-10 w-10">
+            <AvatarImage src="/placeholder.svg" />
+            <AvatarFallback className="bg-primary/10 text-primary font-semibold">JD</AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold truncate">John Doe</p>
+            <p className="text-xs text-muted-foreground truncate">Shoreline Church</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col border-r border-border bg-card">
+        <SidebarContent />
+      </aside>
+
+      {/* Mobile Header */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border">
+        <div className="flex items-center justify-between h-16 px-4">
+          <Link to="/dashboard" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-gold flex items-center justify-center">
+              <Wheat className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <span className="font-display text-lg font-bold">Daily Bread</span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon-sm">
+              <Bell className="w-5 h-5" />
+            </Button>
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon-sm">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-72 p-0">
+                <SidebarContent />
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="lg:pl-64">
+        {/* Desktop Header */}
+        <header className="hidden lg:flex items-center justify-between h-16 px-8 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
+          <div>
+            <h1 className="text-lg font-semibold">Welcome back, John!</h1>
+            <p className="text-sm text-muted-foreground">Here's your giving overview</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon">
+              <Bell className="w-5 h-5" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center gap-2 px-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">JD</AvatarFallback>
+                  </Avatar>
+                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard/profile" className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard/settings" className="flex items-center gap-2">
+                    <Settings className="w-4 h-4" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-destructive">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
+
+        <div className="pt-16 lg:pt-0">
+          {children || <Outlet />}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default DashboardLayout;
