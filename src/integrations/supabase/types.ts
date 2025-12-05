@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      churches: {
+        Row: {
+          city: string | null
+          contact_email: string | null
+          country: string | null
+          created_at: string
+          id: string
+          logo_url: string | null
+          member_count: number | null
+          name: string
+          slug: string | null
+          state: string | null
+          status: string
+          stripe_account_id: string | null
+          total_donated: number | null
+          updated_at: string
+          website: string | null
+          zip_code: string | null
+        }
+        Insert: {
+          city?: string | null
+          contact_email?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          member_count?: number | null
+          name: string
+          slug?: string | null
+          state?: string | null
+          status?: string
+          stripe_account_id?: string | null
+          total_donated?: number | null
+          updated_at?: string
+          website?: string | null
+          zip_code?: string | null
+        }
+        Update: {
+          city?: string | null
+          contact_email?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          member_count?: number | null
+          name?: string
+          slug?: string | null
+          state?: string | null
+          status?: string
+          stripe_account_id?: string | null
+          total_donated?: number | null
+          updated_at?: string
+          website?: string | null
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -45,7 +102,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_church_id_fkey"
+            columns: ["church_id"]
+            isOneToOne: false
+            referencedRelation: "churches"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

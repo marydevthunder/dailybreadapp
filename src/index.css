@@ -6,77 +6,77 @@
 
 @layer base {
   :root {
-    /* Warm Church Donation Theme */
-    --background: 45 30% 98%;
-    --foreground: 25 25% 15%;
+    /* Clean Church Donation Theme - Blue */
+    --background: 210 20% 98%;
+    --foreground: 220 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 25 25% 15%;
+    --card-foreground: 220 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 25 25% 15%;
+    --popover-foreground: 220 25% 15%;
 
-    /* Warm Amber Gold - Primary */
-    --primary: 38 92% 50%;
-    --primary-foreground: 25 25% 10%;
+    /* Royal Blue - Primary */
+    --primary: 217 91% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Sage Green - Secondary */
-    --secondary: 145 25% 92%;
-    --secondary-foreground: 145 35% 25%;
+    /* Light Blue - Secondary */
+    --secondary: 210 40% 94%;
+    --secondary-foreground: 217 80% 40%;
 
-    /* Muted Cream */
-    --muted: 40 20% 94%;
-    --muted-foreground: 25 15% 45%;
+    /* Muted Gray Blue */
+    --muted: 210 20% 94%;
+    --muted-foreground: 220 15% 45%;
 
-    /* Forest Green - Accent */
-    --accent: 145 35% 35%;
+    /* Deep Blue - Accent */
+    --accent: 217 80% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
-    --ring: 38 92% 50%;
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 217 91% 55%;
 
     --radius: 0.75rem;
 
     /* Custom Colors */
-    --gold: 38 92% 50%;
-    --gold-light: 40 85% 65%;
-    --gold-dark: 35 90% 40%;
+    --blue: 217 91% 55%;
+    --blue-light: 210 85% 65%;
+    --blue-dark: 220 90% 45%;
     --forest: 145 35% 35%;
     --forest-light: 145 30% 45%;
     --forest-dark: 145 40% 25%;
-    --cream: 45 30% 96%;
-    --cream-dark: 40 25% 92%;
-    --warm-brown: 25 30% 25%;
+    --cream: 210 20% 97%;
+    --cream-dark: 210 15% 93%;
+    --warm-gray: 220 15% 25%;
     --terracotta: 15 65% 55%;
 
     /* Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(40 85% 65%) 100%);
+    --gradient-blue: linear-gradient(135deg, hsl(217 91% 55%) 0%, hsl(210 85% 65%) 100%);
     --gradient-forest: linear-gradient(135deg, hsl(145 35% 35%) 0%, hsl(145 30% 45%) 100%);
-    --gradient-warm: linear-gradient(180deg, hsl(45 30% 98%) 0%, hsl(40 25% 92%) 100%);
+    --gradient-warm: linear-gradient(180deg, hsl(210 20% 98%) 0%, hsl(210 15% 93%) 100%);
     --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(40 20% 98%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 20% 98%) 100%);
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(25 25% 15% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(25 25% 15% / 0.07), 0 2px 4px -2px hsl(25 25% 15% / 0.05);
-    --shadow-lg: 0 10px 15px -3px hsl(25 25% 15% / 0.08), 0 4px 6px -4px hsl(25 25% 15% / 0.05);
-    --shadow-xl: 0 20px 25px -5px hsl(25 25% 15% / 0.1), 0 8px 10px -6px hsl(25 25% 15% / 0.05);
-    --shadow-glow: 0 0 40px hsl(38 92% 50% / 0.3);
-    --shadow-card: 0 4px 20px hsl(25 25% 15% / 0.06);
+    --shadow-sm: 0 1px 2px 0 hsl(220 25% 15% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 25% 15% / 0.07), 0 2px 4px -2px hsl(220 25% 15% / 0.05);
+    --shadow-lg: 0 10px 15px -3px hsl(220 25% 15% / 0.08), 0 4px 6px -4px hsl(220 25% 15% / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(220 25% 15% / 0.1), 0 8px 10px -6px hsl(220 25% 15% / 0.05);
+    --shadow-glow: 0 0 40px hsl(217 91% 55% / 0.3);
+    --shadow-card: 0 4px 20px hsl(220 25% 15% / 0.06);
 
     /* Sidebar */
-    --sidebar-background: 45 30% 98%;
-    --sidebar-foreground: 25 25% 15%;
-    --sidebar-primary: 38 92% 50%;
-    --sidebar-primary-foreground: 25 25% 10%;
-    --sidebar-accent: 145 25% 92%;
-    --sidebar-accent-foreground: 145 35% 25%;
-    --sidebar-border: 40 20% 88%;
-    --sidebar-ring: 38 92% 50%;
+    --sidebar-background: 210 20% 98%;
+    --sidebar-foreground: 220 25% 15%;
+    --sidebar-primary: 217 91% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 94%;
+    --sidebar-accent-foreground: 217 80% 40%;
+    --sidebar-border: 210 20% 88%;
+    --sidebar-ring: 217 91% 55%;
 
     /* Success/Info States */
     --success: 145 50% 45%;
@@ -88,59 +88,59 @@
   }
 
   .dark {
-    --background: 25 25% 10%;
-    --foreground: 40 20% 95%;
+    --background: 220 25% 10%;
+    --foreground: 210 20% 95%;
 
-    --card: 25 20% 14%;
-    --card-foreground: 40 20% 95%;
+    --card: 220 20% 14%;
+    --card-foreground: 210 20% 95%;
 
-    --popover: 25 20% 14%;
-    --popover-foreground: 40 20% 95%;
+    --popover: 220 20% 14%;
+    --popover-foreground: 210 20% 95%;
 
-    --primary: 38 92% 55%;
-    --primary-foreground: 25 25% 10%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 145 20% 18%;
-    --secondary-foreground: 145 25% 85%;
+    --secondary: 217 20% 18%;
+    --secondary-foreground: 217 40% 85%;
 
-    --muted: 25 15% 20%;
-    --muted-foreground: 40 15% 65%;
+    --muted: 220 15% 20%;
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 145 35% 40%;
+    --accent: 217 80% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 25 15% 22%;
-    --input: 25 15% 22%;
-    --ring: 38 92% 55%;
+    --border: 220 15% 22%;
+    --input: 220 15% 22%;
+    --ring: 217 91% 60%;
 
-    --gold: 38 92% 55%;
-    --gold-light: 40 85% 70%;
-    --gold-dark: 35 90% 45%;
+    --blue: 217 91% 60%;
+    --blue-light: 210 85% 70%;
+    --blue-dark: 220 90% 50%;
     --forest: 145 35% 40%;
     --forest-light: 145 30% 50%;
     --forest-dark: 145 40% 30%;
-    --cream: 25 20% 14%;
-    --cream-dark: 25 18% 12%;
-    --warm-brown: 40 20% 85%;
+    --cream: 220 20% 14%;
+    --cream-dark: 220 18% 12%;
+    --warm-gray: 210 20% 85%;
 
-    --gradient-gold: linear-gradient(135deg, hsl(38 92% 55%) 0%, hsl(40 85% 70%) 100%);
+    --gradient-blue: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(210 85% 70%) 100%);
     --gradient-forest: linear-gradient(135deg, hsl(145 35% 40%) 0%, hsl(145 30% 50%) 100%);
-    --gradient-warm: linear-gradient(180deg, hsl(25 25% 10%) 0%, hsl(25 20% 14%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(25 20% 14%) 0%, hsl(25 18% 12%) 100%);
+    --gradient-warm: linear-gradient(180deg, hsl(220 25% 10%) 0%, hsl(220 20% 14%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 20% 14%) 0%, hsl(220 18% 12%) 100%);
 
-    --shadow-glow: 0 0 40px hsl(38 92% 55% / 0.2);
+    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.2);
 
-    --sidebar-background: 25 25% 10%;
-    --sidebar-foreground: 40 20% 95%;
-    --sidebar-primary: 38 92% 55%;
-    --sidebar-primary-foreground: 25 25% 10%;
-    --sidebar-accent: 145 20% 18%;
-    --sidebar-accent-foreground: 145 25% 85%;
-    --sidebar-border: 25 15% 22%;
-    --sidebar-ring: 38 92% 55%;
+    --sidebar-background: 220 25% 10%;
+    --sidebar-foreground: 210 20% 95%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 20% 18%;
+    --sidebar-accent-foreground: 217 40% 85%;
+    --sidebar-border: 220 15% 22%;
+    --sidebar-ring: 217 91% 60%;
   }
 }
 
@@ -189,7 +189,7 @@
   }
 
   /* Badge Styles */
-  .badge-gold {
+  .badge-blue {
     @apply bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-full text-sm font-medium;
   }
 
@@ -207,12 +207,12 @@
   }
 
   /* Progress Bar */
-  .progress-gold {
+  .progress-blue {
     @apply h-2 rounded-full bg-muted overflow-hidden;
   }
 
-  .progress-gold-fill {
-    @apply h-full rounded-full bg-gradient-to-r from-primary to-gold-light transition-all duration-500;
+  .progress-blue-fill {
+    @apply h-full rounded-full bg-gradient-to-r from-primary to-blue-light transition-all duration-500;
   }
 
   /* Input Focus */
@@ -223,9 +223,9 @@
 
 @layer utilities {
   /* Text Gradient */
-  .text-gradient-gold {
+  .text-gradient-blue {
     @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-gold);
+    background-image: var(--gradient-blue);
   }
 
   .text-gradient-forest {
@@ -234,8 +234,8 @@
   }
 
   /* Background Gradient */
-  .bg-gradient-gold {
-    background-image: var(--gradient-gold);
+  .bg-gradient-blue {
+    background-image: var(--gradient-blue);
   }
 
   .bg-gradient-forest {

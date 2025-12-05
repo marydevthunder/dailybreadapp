@@ -15,6 +15,7 @@ import ChurchOnboarding from "./pages/ChurchOnboarding";
 import ChurchOnboardingKit from "./pages/ChurchOnboardingKit";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
+import MyChurch from "./pages/MyChurch";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -36,12 +37,14 @@ const App = () => (
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/dashboard/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-            <Route path="/dashboard/church" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/my-church" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
+            <Route path="/dashboard/church" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="/dashboard/activity" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/church-admin" element={<ChurchAdmin />} />
             <Route path="/church-onboarding" element={<ChurchOnboarding />} />
             <Route path="/church-onboarding-kit" element={<ChurchOnboardingKit />} />
             <Route path="/get-started" element={<ChurchOnboarding />} />
+            <Route path="/join/:churchSlug" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

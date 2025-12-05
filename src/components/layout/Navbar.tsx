@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, LogOut, User, Settings, LayoutDashboard } from "lucide-react";
+import { Menu, LogOut, User, Settings, LayoutDashboard, Church } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import logo from "@/assets/logo.jpg";
+import breadLogo from "@/assets/bread-logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,9 +51,9 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <img 
-              src={logo} 
+              src={breadLogo} 
               alt="Daily Bread" 
-              className="w-10 h-10 rounded-xl object-cover shadow-md group-hover:shadow-glow transition-shadow duration-300"
+              className="w-10 h-10 object-contain"
             />
             <span className="font-display text-xl font-bold text-foreground">
               Daily Bread
@@ -88,7 +88,7 @@ const Navbar = () => {
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10 border-2 border-primary/20">
                       <AvatarImage src={user.user_metadata?.avatar_url} />
-                      <AvatarFallback className="bg-gradient-gold text-primary-foreground font-semibold">
+                      <AvatarFallback className="bg-gradient-blue text-primary-foreground font-semibold">
                         {getInitials()}
                       </AvatarFallback>
                     </Avatar>
@@ -112,6 +112,12 @@ const Navbar = () => {
                     <Link to="/dashboard" className="cursor-pointer">
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard/my-church" className="cursor-pointer">
+                      <Church className="mr-2 h-4 w-4" />
+                      My Church
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -157,7 +163,7 @@ const Navbar = () => {
                 {/* Mobile Header */}
                 <div className="flex items-center justify-between p-4 border-b border-border">
                   <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                    <img src={logo} alt="Daily Bread" className="w-9 h-9 rounded-lg object-cover" />
+                    <img src={breadLogo} alt="Daily Bread" className="w-9 h-9 object-contain" />
                     <span className="font-display text-lg font-bold">Daily Bread</span>
                   </Link>
                 </div>
@@ -168,7 +174,7 @@ const Navbar = () => {
                     <div className="flex items-center gap-3">
                       <Avatar className="h-12 w-12 border-2 border-primary/20">
                         <AvatarImage src={user.user_metadata?.avatar_url} />
-                        <AvatarFallback className="bg-gradient-gold text-primary-foreground font-semibold">
+                        <AvatarFallback className="bg-gradient-blue text-primary-foreground font-semibold">
                           {getInitials()}
                         </AvatarFallback>
                       </Avatar>
@@ -215,6 +221,14 @@ const Navbar = () => {
                         >
                           <LayoutDashboard className="w-5 h-5 mr-3" />
                           Dashboard
+                        </Link>
+                        <Link
+                          to="/dashboard/my-church"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
+                        >
+                          <Church className="w-5 h-5 mr-3" />
+                          My Church
                         </Link>
                         <Link
                           to="/dashboard/profile"

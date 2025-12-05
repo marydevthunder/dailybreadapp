@@ -7,11 +7,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Wheat, Mail, Lock, User, ArrowRight, Eye, EyeOff } from "lucide-react";
-import logo from "@/assets/logo.jpg";
+import { Mail, Lock, User, ArrowRight, Eye, EyeOff } from "lucide-react";
+import breadLogo from "@/assets/bread-logo.png";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -94,7 +94,7 @@ const Auth = () => {
       {/* Header */}
       <header className="p-4">
         <Link to="/" className="flex items-center gap-2 w-fit">
-          <img src={logo} alt="Daily Bread" className="w-10 h-10 rounded-xl object-cover" />
+          <img src={breadLogo} alt="Daily Bread" className="w-10 h-10 object-contain" />
           <span className="font-display text-xl font-bold text-foreground">Daily Bread</span>
         </Link>
       </header>
@@ -104,8 +104,8 @@ const Auth = () => {
         <div className="w-full max-w-md">
           {/* Welcome Text */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-gold flex items-center justify-center shadow-lg">
-              <Wheat className="w-8 h-8 text-primary-foreground" />
+            <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+              <img src={breadLogo} alt="Daily Bread" className="w-full h-full object-contain" />
             </div>
             <h1 className="font-display text-3xl font-bold text-foreground mb-2">
               {activeTab === "login" ? "Welcome Back" : "Join Daily Bread"}

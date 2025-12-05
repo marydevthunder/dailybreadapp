@@ -62,10 +62,10 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         // Custom Colors
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
-          dark: "hsl(var(--gold-dark))",
+        blue: {
+          DEFAULT: "hsl(var(--blue))",
+          light: "hsl(var(--blue-light))",
+          dark: "hsl(var(--blue-dark))",
         },
         forest: {
           DEFAULT: "hsl(var(--forest))",
@@ -76,7 +76,7 @@ export default {
           DEFAULT: "hsl(var(--cream))",
           dark: "hsl(var(--cream-dark))",
         },
-        "warm-brown": "hsl(var(--warm-brown))",
+        "warm-gray": "hsl(var(--warm-gray))",
         terracotta: "hsl(var(--terracotta))",
         success: {
           DEFAULT: "hsl(var(--success))",
@@ -166,7 +166,7 @@ export default {
         "count-up": "count-up 0.5s ease-out forwards",
       },
       backgroundImage: {
-        "gradient-gold": "var(--gradient-gold)",
+        "gradient-blue": "var(--gradient-blue)",
         "gradient-forest": "var(--gradient-forest)",
         "gradient-warm": "var(--gradient-warm)",
         "gradient-hero": "var(--gradient-hero)",
