@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   User,
   Church,
@@ -24,10 +25,12 @@ import {
 } from "lucide-react";
 
 const Profile = () => {
+  const { user } = useAuth();
+  
   const userData = {
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@email.com",
+    firstName: user?.user_metadata?.first_name || "User",
+    lastName: user?.user_metadata?.last_name || "",
+    email: user?.email || "",
     church: "Shoreline Church",
     memberSince: "March 2024",
     allTimeGiven: 523.45,
