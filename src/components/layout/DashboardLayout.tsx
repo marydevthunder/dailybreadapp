@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, Outlet } from "react-router-dom";
+import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -21,10 +21,12 @@ import {
   LogOut,
   CreditCard,
   Bell,
-  Wheat,
   ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
+import breadLogo from "@/assets/bread-logo.png";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -33,12 +35,34 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("You've been signed out");
+    navigate("/");
+  };
+
+  const getInitials = () => {
+    if (user?.user_metadata?.first_name && user?.user_metadata?.last_name) {
+      return `${user.user_metadata.first_name[0]}${user.user_metadata.last_name[0]}`.toUpperCase();
+    }
+    return user?.email?.[0]?.toUpperCase() || "U";
+  };
+
+  const getDisplayName = () => {
+    if (user?.user_metadata?.first_name) {
+      return `${user.user_metadata.first_name} ${user.user_metadata.last_name || ""}`.trim();
+    }
+    return user?.email || "User";
+  };
+
   const navItems = [
     { icon: Home, label: "Home", path: "/dashboard" },
-    { icon: Church, label: "My Church", path: "/dashboard/church" },
+    { icon: Church, label: "My Church", path: "/dashboard/my-church" },
     { icon: User, label: "Profile", path: "/dashboard/profile" },
     { icon: CreditCard, label: "Giving Settings", path: "/dashboard/settings" },
     { icon: History, label: "Activity", path: "/dashboard/activity" },
@@ -50,9 +74,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       {/* Logo */}
       <div className="p-6 border-b border-border">
         <Link to="/dashboard" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-gradient-gold flex items-center justify-center">
-            <Wheat className="w-4 h-4 text-primary-foreground" />
-          </div>
+          <img src={breadLogo} alt="Daily Bread" className="w-9 h-9 object-contain" />
           <span className="font-display text-lg font-bold">Daily Bread</span>
         </Link>
       </div>
@@ -84,12 +106,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <div className="p-4 border-t border-border">
         <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
           <Avatar className="h-10 w-10">
-            <AvatarImage src="/placeholder.svg" />
-            <AvatarFallback className="bg-primary/10 text-primary font-semibold">JD</AvatarFallback>
+            <AvatarImage src={user?.user_metadata?.avatar_url} />
+            <AvatarFallback className="bg-primary/10 text-primary font-semibold">{getInitials()}</AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold truncate">John Doe</p>
-            <p className="text-xs text-muted-foreground truncate">Shoreline Church</p>
+            <p className="text-sm font-semibold truncate">{getDisplayName()}</p>
+            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
           </div>
         </div>
       </div>
@@ -107,9 +129,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border">
         <div className="flex items-center justify-between h-16 px-4">
           <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-gold flex items-center justify-center">
-              <Wheat className="w-4 h-4 text-primary-foreground" />
-            </div>
+            <img src={breadLogo} alt="Daily Bread" className="w-8 h-8 object-contain" />
             <span className="font-display text-lg font-bold">Daily Bread</span>
           </Link>
 
@@ -136,7 +156,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         {/* Desktop Header */}
         <header className="hidden lg:flex items-center justify-between h-16 px-8 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
           <div>
-            <h1 className="text-lg font-semibold">Welcome back, John!</h1>
+            <h1 className="text-lg font-semibold">Welcome back, {user?.user_metadata?.first_name || "Friend"}!</h1>
             <p className="text-sm text-muted-foreground">Here's your giving overview</p>
           </div>
           <div className="flex items-center gap-4">
@@ -147,7 +167,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center gap-2 px-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">JD</AvatarFallback>
+                    <AvatarImage src={user?.user_metadata?.avatar_url} />
+                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">{getInitials()}</AvatarFallback>
                   </Avatar>
                   <ChevronDown className="w-4 h-4 text-muted-foreground" />
                 </Button>
@@ -166,7 +187,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem onClick={handleSignOut} className="text-destructive cursor-pointer">
                   <LogOut className="w-4 h-4 mr-2" />
                   Log out
                 </DropdownMenuItem>

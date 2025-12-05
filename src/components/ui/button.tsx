@@ -15,11 +15,11 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-muted hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        // Custom variants for Daily Bread
-        gold: "bg-gradient-gold text-primary-foreground hover:shadow-glow hover:-translate-y-0.5 font-bold",
+        // Custom variants for Daily Bread - Blue Theme
+        gold: "bg-gradient-blue text-primary-foreground hover:shadow-glow hover:-translate-y-0.5 font-bold",
         forest: "bg-gradient-forest text-accent-foreground hover:opacity-90 hover:-translate-y-0.5",
         hero: "bg-card/95 text-foreground border-2 border-primary/30 hover:bg-card hover:border-primary hover:shadow-lg backdrop-blur-sm",
-        "hero-primary": "bg-gradient-gold text-primary-foreground hover:shadow-glow hover:-translate-y-1 font-bold text-base px-8 py-3",
+        "hero-primary": "bg-gradient-blue text-primary-foreground hover:shadow-glow hover:-translate-y-1 font-bold text-base px-8 py-3",
         "hero-secondary": "bg-card/20 text-card border border-card/40 hover:bg-card/30 backdrop-blur-sm",
         "outline-gold": "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
         "outline-forest": "border-2 border-accent bg-transparent text-accent hover:bg-accent hover:text-accent-foreground",
