@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   TrendingUp,
   Church,
@@ -18,9 +19,11 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
-  // Mock data
+  const { user } = useAuth();
+  
+  // Mock data - later will come from database
   const userData = {
-    firstName: "John",
+    firstName: user?.user_metadata?.first_name || "Friend",
     church: "Shoreline Church",
     churchLogo: null,
     thisMonth: 47.32,
