@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { z } from "zod";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -28,15 +29,31 @@ import {
   Heart,
 } from "lucide-react";
 
+// Zod schema for church form validation
+const churchSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(2, 'Church name must be at least 2 characters')
+    .max(100, 'Church name must be less than 100 characters'),
+  city: z.string().max(50, 'City must be less than 50 characters').optional().or(z.literal('')),
+  state: z.string().max(50, 'State must be less than 50 characters').optional().or(z.literal('')),
+  website: z.string().url('Invalid URL format').optional().or(z.literal('')),
+  contactEmail: z.string().email('Invalid email format').optional().or(z.literal('')),
+});
+
+// Safe columns to select from churches (excludes sensitive data)
+const SAFE_CHURCH_COLUMNS = 'id, name, city, state, country, slug, logo_url, member_count, status';
+
 interface ChurchData {
   id: string;
   name: string;
   city: string | null;
   state: string | null;
+  country: string | null;
   status: string;
   member_count: number | null;
-  total_donated: number | null;
   logo_url: string | null;
+  slug: string | null;
 }
 
 const MyChurch = () => {
@@ -91,7 +108,7 @@ const MyChurch = () => {
       if (profile?.church_id) {
         const { data: church } = await supabase
           .from("churches")
-          .select("*")
+          .select(SAFE_CHURCH_COLUMNS)
           .eq("id", profile.church_id)
           .single();
 
@@ -109,7 +126,7 @@ const MyChurch = () => {
   const searchChurchBySlug = async (slug: string) => {
     const { data } = await supabase
       .from("churches")
-      .select("*")
+      .select(SAFE_CHURCH_COLUMNS)
       .eq("slug", slug)
       .eq("status", "active")
       .single();
@@ -127,7 +144,7 @@ const MyChurch = () => {
     try {
       const { data, error } = await supabase
         .from("churches")
-        .select("*")
+        .select(SAFE_CHURCH_COLUMNS)
         .eq("status", "active")
         .or(`name.ilike.%${searchQuery}%,city.ilike.%${searchQuery}%`)
         .limit(10);
@@ -167,14 +184,17 @@ const MyChurch = () => {
   };
 
   const handleSubmitNewChurch = async () => {
-    if (!newChurch.name.trim()) {
-      toast.error("Church name is required");
+    // Validate form data with Zod schema
+    const result = churchSchema.safeParse(newChurch);
+    if (!result.success) {
+      toast.error(result.error.issues[0].message);
       return;
     }
 
     setIsSubmittingNewChurch(true);
     try {
-      const slug = newChurch.name
+      const validatedData = result.data;
+      const slug = validatedData.name
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
@@ -182,15 +202,15 @@ const MyChurch = () => {
       const { data, error } = await supabase
         .from("churches")
         .insert({
-          name: newChurch.name,
-          city: newChurch.city || null,
-          state: newChurch.state || null,
-          website: newChurch.website || null,
-          contact_email: newChurch.contactEmail || null,
+          name: validatedData.name,
+          city: validatedData.city || null,
+          state: validatedData.state || null,
+          website: validatedData.website || null,
+          contact_email: validatedData.contactEmail || null,
           slug: slug,
           status: "pending",
         })
-        .select()
+        .select(SAFE_CHURCH_COLUMNS)
         .single();
 
       if (error) throw error;
@@ -302,9 +322,7 @@ const MyChurch = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <DollarSign className="w-8 h-8 text-success mx-auto mb-2" />
-                  <p className="font-display text-2xl font-bold">
-                    ${myChurch.total_donated?.toLocaleString() || "0"}
-                  </p>
+                  <p className="font-display text-2xl font-bold">—</p>
                   <p className="text-sm text-muted-foreground">Total Donated</p>
                 </CardContent>
               </Card>
