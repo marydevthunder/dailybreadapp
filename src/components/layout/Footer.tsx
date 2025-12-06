@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Wheat, Heart, Mail, MapPin } from "lucide-react";
+import { Heart, Mail, MapPin } from "lucide-react";
+import breadLogo from "@/assets/bread-logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -38,9 +39,11 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-gold flex items-center justify-center">
-                <Wheat className="w-5 h-5 text-primary-foreground" />
-              </div>
+              <img 
+                src={breadLogo} 
+                alt="Daily Bread" 
+                className="w-10 h-10 object-contain"
+              />
               <span className="font-display text-xl font-bold">Daily Bread</span>
             </Link>
             <p className="text-background/70 max-w-sm mb-6 leading-relaxed">

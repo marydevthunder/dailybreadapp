@@ -12,13 +12,13 @@ import {
   Heart,
   Users,
   CheckCircle2,
-  Wheat,
   Coins,
   Building2,
   BarChart3,
   Zap,
   Star,
 } from "lucide-react";
+import breadLogo from "@/assets/bread-logo.png";
 import heroImage from "@/assets/hero-image.jpg";
 import communityHands from "@/assets/community-hands.png";
 import appMockup from "@/assets/app-mockup.png";
@@ -119,13 +119,13 @@ const Index = () => {
         <div className="relative z-10 container mx-auto px-4 py-32 text-center">
           <div className="max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-card/10 backdrop-blur-sm border border-card/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
-              <Wheat className="w-4 h-4 text-primary" />
+              <img src={breadLogo} alt="" className="w-5 h-5 object-contain" />
               <span className="text-sm text-card font-medium">Generosity made simple</span>
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-card mb-6 leading-tight animate-slide-up">
               Turn Your Spare Change Into{" "}
-              <span className="text-gradient-gold">Kingdom Impact</span>
+              <span className="text-gradient-blue">Kingdom Impact</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-card/80 max-w-2xl mx-auto mb-10 animate-slide-up stagger-1">
@@ -191,7 +191,7 @@ const Index = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="badge-gold mb-4 inline-block">How It Works</span>
+            <span className="badge-blue mb-4 inline-block">How It Works</span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Start Giving in Minutes
             </h2>
@@ -209,7 +209,7 @@ const Index = () => {
                 )}
                 
                 <div className="card-elevated p-6 text-center hover-lift relative z-10 bg-card">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-gold mx-auto mb-4 flex items-center justify-center shadow-glow">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-blue mx-auto mb-4 flex items-center justify-center shadow-glow">
                     <step.icon className="w-7 h-7 text-primary-foreground" />
                   </div>
                   <span className="inline-block w-8 h-8 rounded-full bg-accent/10 text-accent font-bold text-sm leading-8 mb-3">
@@ -272,7 +272,7 @@ const Index = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-gold opacity-20 blur-3xl rounded-full" />
+              <div className="absolute inset-0 bg-gradient-blue opacity-20 blur-3xl rounded-full" />
               <img
                 src={appMockup}
                 alt="Daily Bread App Interface"
@@ -287,7 +287,7 @@ const Index = () => {
       <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="badge-gold mb-4 inline-block">Features</span>
+            <span className="badge-blue mb-4 inline-block">Features</span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Everything You Need to Give Generously
             </h2>
@@ -454,8 +454,8 @@ const Index = () => {
       <section className="py-24 bg-foreground">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-gold mx-auto mb-8 flex items-center justify-center">
-              <Wheat className="w-8 h-8 text-primary-foreground" />
+            <div className="w-16 h-16 rounded-2xl bg-gradient-blue mx-auto mb-8 flex items-center justify-center">
+              <img src={breadLogo} alt="" className="w-10 h-10 object-contain" />
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-card mb-6">
               Ready to Transform Your Giving?
