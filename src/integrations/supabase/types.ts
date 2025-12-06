@@ -110,6 +110,13 @@ export type Database = {
             referencedRelation: "churches"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "profiles_church_id_fkey"
+            columns: ["church_id"]
+            isOneToOne: false
+            referencedRelation: "churches_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_roles: {
@@ -142,11 +149,53 @@ export type Database = {
             referencedRelation: "churches"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "user_roles_church_id_fkey"
+            columns: ["church_id"]
+            isOneToOne: false
+            referencedRelation: "churches_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      churches_public: {
+        Row: {
+          city: string | null
+          country: string | null
+          id: string | null
+          logo_url: string | null
+          member_count: number | null
+          name: string | null
+          slug: string | null
+          state: string | null
+          status: string | null
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          id?: string | null
+          logo_url?: string | null
+          member_count?: number | null
+          name?: string | null
+          slug?: string | null
+          state?: string | null
+          status?: string | null
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          id?: string | null
+          logo_url?: string | null
+          member_count?: number | null
+          name?: string | null
+          slug?: string | null
+          state?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
