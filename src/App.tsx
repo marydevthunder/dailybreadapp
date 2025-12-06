@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedChurchAdminRoute from "@/components/ProtectedChurchAdminRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import HowItWorks from "./pages/HowItWorks";
@@ -40,9 +41,9 @@ const App = () => (
             <Route path="/dashboard/my-church" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="/dashboard/church" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="/dashboard/activity" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/church-admin" element={<ProtectedRoute><ChurchAdmin /></ProtectedRoute>} />
-            <Route path="/church-onboarding" element={<ProtectedRoute><ChurchOnboarding /></ProtectedRoute>} />
-            <Route path="/church-onboarding-kit" element={<ProtectedRoute><ChurchOnboardingKit /></ProtectedRoute>} />
+            <Route path="/church-admin" element={<ProtectedChurchAdminRoute><ChurchAdmin /></ProtectedChurchAdminRoute>} />
+            <Route path="/church-onboarding" element={<ProtectedChurchAdminRoute><ChurchOnboarding /></ProtectedChurchAdminRoute>} />
+            <Route path="/church-onboarding-kit" element={<ProtectedChurchAdminRoute><ChurchOnboardingKit /></ProtectedChurchAdminRoute>} />
             <Route path="/get-started" element={<ChurchOnboarding />} />
             <Route path="/join/:churchSlug" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
