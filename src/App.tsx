@@ -40,9 +40,9 @@ const App = () => (
             <Route path="/dashboard/my-church" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="/dashboard/church" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="/dashboard/activity" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/church-admin" element={<ChurchAdmin />} />
-            <Route path="/church-onboarding" element={<ChurchOnboarding />} />
-            <Route path="/church-onboarding-kit" element={<ChurchOnboardingKit />} />
+            <Route path="/church-admin" element={<ProtectedRoute><ChurchAdmin /></ProtectedRoute>} />
+            <Route path="/church-onboarding" element={<ProtectedRoute><ChurchOnboarding /></ProtectedRoute>} />
+            <Route path="/church-onboarding-kit" element={<ProtectedRoute><ChurchOnboardingKit /></ProtectedRoute>} />
             <Route path="/get-started" element={<ChurchOnboarding />} />
             <Route path="/join/:churchSlug" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />

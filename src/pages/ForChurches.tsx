@@ -130,7 +130,7 @@ const ForChurches = () => {
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-card mb-6 leading-tight">
               Grow Your Church's Giving{" "}
-              <span className="text-gradient-gold">Effortlessly</span>
+              <span className="text-gradient-blue">Effortlessly</span>
             </h1>
 
             <p className="text-lg text-card/80 mb-8">
@@ -173,7 +173,7 @@ const ForChurches = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="badge-gold mb-4 inline-block">Why Daily Bread?</span>
+            <span className="badge-blue mb-4 inline-block">Why Daily Bread?</span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
               Built for Modern Churches
             </h2>
@@ -186,7 +186,7 @@ const ForChurches = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="card-elevated p-6 text-center hover-lift">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-gold mx-auto mb-4 flex items-center justify-center shadow-md">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-blue mx-auto mb-4 flex items-center justify-center shadow-md">
                   <benefit.icon className="w-7 h-7 text-primary-foreground" />
                 </div>
                 <h3 className="font-display text-lg font-semibold mb-2">{benefit.title}</h3>
@@ -243,7 +243,7 @@ const ForChurches = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="badge-gold mb-4 inline-block">Getting Started</span>
+            <span className="badge-blue mb-4 inline-block">Getting Started</span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
               Launch in 4 Simple Steps
             </h2>
@@ -253,7 +253,7 @@ const ForChurches = () => {
             {steps.map((step, index) => (
               <div key={index} className="flex gap-6 mb-8">
                 <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-gradient-gold flex items-center justify-center text-primary-foreground font-bold text-lg">
+                  <div className="w-12 h-12 rounded-full bg-gradient-blue flex items-center justify-center text-primary-foreground font-bold text-lg">
                     {step.number}
                   </div>
                   {index < steps.length - 1 && (
@@ -319,7 +319,7 @@ const ForChurches = () => {
       <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="badge-gold mb-4 inline-block">Simple Pricing</span>
+            <span className="badge-blue mb-4 inline-block">Simple Pricing</span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
               No Setup Fees. No Monthly Costs.
             </h2>

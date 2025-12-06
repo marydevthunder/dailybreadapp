@@ -14,9 +14,9 @@ import {
   Bell,
   Calculator,
   CheckCircle2,
-  Wheat,
 } from "lucide-react";
 import appMockup from "@/assets/app-mockup.png";
+import breadLogo from "@/assets/bread-logo.png";
 
 const HowItWorks = () => {
   const steps = [
@@ -108,9 +108,9 @@ const HowItWorks = () => {
       <section className="pt-32 pb-20 bg-gradient-warm">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="badge-gold mb-4 inline-block">How It Works</span>
+            <span className="badge-blue mb-4 inline-block">How It Works</span>
             <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
-              Effortless Giving in <span className="text-gradient-gold">5 Simple Steps</span>
+              Effortless Giving in <span className="text-gradient-blue">5 Simple Steps</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               Transform your everyday purchases into meaningful support for your church. 
@@ -134,7 +134,7 @@ const HowItWorks = () => {
                 <div className="flex gap-6 mb-16">
                   {/* Step Number */}
                   <div className="hidden sm:flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-gold flex items-center justify-center shadow-glow">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-blue flex items-center justify-center shadow-glow">
                       <step.icon className="w-7 h-7 text-primary-foreground" />
                     </div>
                   </div>
@@ -143,7 +143,7 @@ const HowItWorks = () => {
                   <div className="flex-1">
                     <div className="card-elevated p-6 sm:p-8 hover-lift">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="sm:hidden w-12 h-12 rounded-xl bg-gradient-gold flex items-center justify-center">
+                        <div className="sm:hidden w-12 h-12 rounded-xl bg-gradient-blue flex items-center justify-center">
                           <step.icon className="w-6 h-6 text-primary-foreground" />
                         </div>
                         <div>
@@ -251,7 +251,7 @@ const HowItWorks = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <span className="badge-gold mb-4 inline-block">Security First</span>
+                <span className="badge-blue mb-4 inline-block">Security First</span>
                 <h2 className="font-display text-3xl font-bold mb-6">
                   Your Data is Safe With Us
                 </h2>
@@ -278,10 +278,10 @@ const HowItWorks = () => {
               </div>
 
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-gold opacity-10 blur-3xl rounded-full" />
+                <div className="absolute inset-0 bg-gradient-blue opacity-10 blur-3xl rounded-full" />
                 <div className="relative bg-card rounded-2xl p-8 border border-border shadow-card">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-gold flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-blue flex items-center justify-center">
                       <ShieldCheck className="w-6 h-6 text-primary-foreground" />
                     </div>
                     <div>
@@ -329,8 +329,8 @@ const HowItWorks = () => {
       <section className="py-24 bg-foreground">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-2xl mx-auto">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-gold mx-auto mb-6 flex items-center justify-center">
-              <Wheat className="w-8 h-8 text-primary-foreground" />
+            <div className="w-16 h-16 rounded-2xl bg-gradient-blue mx-auto mb-6 flex items-center justify-center">
+              <img src={breadLogo} alt="" className="w-10 h-10 object-contain" />
             </div>
             <h2 className="font-display text-3xl font-bold text-card mb-4">
               Ready to Start?

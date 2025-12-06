@@ -70,9 +70,9 @@ const Pricing = () => {
       <section className="pt-32 pb-20 bg-gradient-warm">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="badge-gold mb-4 inline-block">Pricing</span>
+            <span className="badge-blue mb-4 inline-block">Pricing</span>
             <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
-              Simple, Transparent <span className="text-gradient-gold">Pricing</span>
+              Simple, Transparent <span className="text-gradient-blue">Pricing</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               Free for members. Affordable for churches. No hidden fees, no surprises.
@@ -87,7 +87,7 @@ const Pricing = () => {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Member Card */}
             <Card className="relative overflow-hidden border-2 border-border hover:border-primary/50 transition-colors">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-gold" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-blue" />
               <CardHeader className="text-center pb-2">
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 mx-auto mb-4 flex items-center justify-center">
                   <Users className="w-7 h-7 text-primary" />
@@ -222,7 +222,7 @@ const Pricing = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
-              <span className="badge-gold mb-4 inline-block">FAQ</span>
+              <span className="badge-blue mb-4 inline-block">FAQ</span>
               <h2 className="font-display text-3xl font-bold">Pricing Questions</h2>
             </div>
 
