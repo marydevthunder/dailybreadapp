@@ -6,7 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ProtectedChurchAdminRoute from "@/components/ProtectedChurchAdminRoute";
+import ProtectedAdminRoute from "@/components/ProtectedAdminRoute";
 import Index from "./pages/Index";
+import PlatformAdmin from "./pages/PlatformAdmin";
 import Dashboard from "./pages/Dashboard";
 import HowItWorks from "./pages/HowItWorks";
 import ForChurches from "./pages/ForChurches";
@@ -68,6 +70,7 @@ const App = () => (
             <Route path="/church-onboarding-kit" element={<ProtectedChurchAdminRoute><ChurchOnboardingKit /></ProtectedChurchAdminRoute>} />
             <Route path="/get-started" element={<ChurchOnboarding />} />
             <Route path="/join/:churchSlug" element={<ProtectedRoute><MyChurch /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedAdminRoute><PlatformAdmin /></ProtectedAdminRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
