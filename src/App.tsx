@@ -18,6 +18,7 @@ import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import MyChurch from "./pages/MyChurch";
 import Auth from "./pages/Auth";
+import ChurchAuth from "./pages/ChurchAuth";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -42,6 +43,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/auth/church" element={<ChurchAuth />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/for-churches" element={<ForChurches />} />
             <Route path="/pricing" element={<Pricing />} />

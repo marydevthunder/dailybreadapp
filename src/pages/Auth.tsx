@@ -287,8 +287,16 @@ const Auth = () => {
             </CardContent>
           </Card>
 
-          {/* Footer Text */}
+          {/* Switch Link */}
           <p className="text-center text-sm text-muted-foreground mt-6">
+            Are you a church looking to register?{" "}
+            <Link to="/auth/church" className="text-primary hover:underline font-medium">
+              Register your church
+            </Link>
+          </p>
+
+          {/* Footer Text */}
+          <p className="text-center text-sm text-muted-foreground mt-4">
             By continuing, you agree to our{" "}
             <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>
             {" "}and{" "}
