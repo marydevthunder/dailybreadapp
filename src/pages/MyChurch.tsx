@@ -124,11 +124,11 @@ const MyChurch = () => {
   };
 
   const searchChurchBySlug = async (slug: string) => {
+    // Use public view for searching - only exposes safe columns
     const { data } = await supabase
-      .from("churches")
-      .select(SAFE_CHURCH_COLUMNS)
+      .from("churches_public")
+      .select("*")
       .eq("slug", slug)
-      .eq("status", "active")
       .single();
 
     if (data) {
@@ -142,10 +142,10 @@ const MyChurch = () => {
     
     setIsSearching(true);
     try {
+      // Use public view for searching - only exposes safe columns
       const { data, error } = await supabase
-        .from("churches")
-        .select(SAFE_CHURCH_COLUMNS)
-        .eq("status", "active")
+        .from("churches_public")
+        .select("*")
         .or(`name.ilike.%${searchQuery}%,city.ilike.%${searchQuery}%`)
         .limit(10);
 
