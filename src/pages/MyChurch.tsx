@@ -138,7 +138,9 @@ const MyChurch = () => {
   };
 
   const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
+    // Trim and validate input length for defense-in-depth
+    const sanitized = searchQuery.trim().slice(0, 100);
+    if (!sanitized) return;
     
     setIsSearching(true);
     try {
@@ -146,7 +148,7 @@ const MyChurch = () => {
       const { data, error } = await supabase
         .from("churches_public")
         .select("*")
-        .or(`name.ilike.%${searchQuery}%,city.ilike.%${searchQuery}%`)
+        .or(`name.ilike.%${sanitized}%,city.ilike.%${sanitized}%`)
         .limit(10);
 
       if (error) throw error;
