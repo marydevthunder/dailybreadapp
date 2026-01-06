@@ -57,8 +57,11 @@ const Dashboard = () => {
         {/* Welcome Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
-              Hi, {userData.firstName}! 👋
+            <h1 className="font-display text-2xl sm:text-3xl font-bold text-foreground flex items-center gap-2">
+              Hi, {userData.firstName}!
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
+                <Sparkles className="w-4 h-4 text-primary" />
+              </span>
             </h1>
             <div className="flex items-center gap-2 mt-1">
               <Church className="w-4 h-4 text-muted-foreground" />
@@ -155,8 +158,8 @@ const Dashboard = () => {
               <p className="font-display text-3xl font-bold text-foreground">
                 {userData.streak} months
               </p>
-              <p className="text-sm text-muted-foreground mt-1">
-                Keep it going! 🔥
+              <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1">
+                Keep it going! <Flame className="w-4 h-4 text-terracotta" />
               </p>
             </CardContent>
           </Card>
@@ -248,7 +251,7 @@ const Dashboard = () => {
                 <div className="mt-6 p-4 rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                      <span className="text-xl">🏆</span>
+                      <Award className="w-6 h-6 text-accent" />
                     </div>
                     <div>
                       <p className="font-semibold text-sm">Leaderboard</p>
