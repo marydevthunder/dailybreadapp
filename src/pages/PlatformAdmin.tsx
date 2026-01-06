@@ -8,8 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { Check, X, Eye, Building2, Users, Clock, Loader2, LogOut, LayoutDashboard } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Check, X, Eye, Building2, Users, Clock, Loader2, ChevronRight } from "lucide-react";
+import AdminLayout from "@/components/layout/AdminLayout";
 
 interface Church {
   id: string;
@@ -25,8 +25,7 @@ interface Church {
 }
 
 const PlatformAdmin = () => {
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
   const [churches, setChurches] = useState<Church[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedChurch, setSelectedChurch] = useState<Church | null>(null);
@@ -140,11 +139,11 @@ const PlatformAdmin = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Active</Badge>;
+        return <Badge className="bg-accent/10 text-accent border-accent/20">Active</Badge>;
       case 'pending':
-        return <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">Pending</Badge>;
+        return <Badge className="bg-primary/10 text-primary border-primary/20">Pending</Badge>;
       case 'rejected':
-        return <Badge className="bg-red-500/10 text-red-600 border-red-500/20">Rejected</Badge>;
+        return <Badge className="bg-destructive/10 text-destructive border-destructive/20">Rejected</Badge>;
       default:
         return <Badge variant="secondary">{status}</Badge>;
     }
@@ -158,133 +157,126 @@ const PlatformAdmin = () => {
   const activeCount = churches.filter(c => c.status === 'active').length;
   const totalMembers = churches.reduce((sum, c) => sum + (c.member_count || 0), 0);
 
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
-  };
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
+      <AdminLayout>
+        <div className="flex items-center justify-center h-[60vh]">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </AdminLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <LayoutDashboard className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-semibold text-foreground">Platform Admin</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">{user?.email}</span>
-            <Button variant="ghost" size="sm" onClick={handleSignOut}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
+    <AdminLayout>
+      <div className="p-4 lg:p-8 space-y-8">
+        {/* Stats Cards - Matching Dashboard Style */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Building2 className="w-4 h-4" />
+                Total Churches
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="font-display text-3xl font-bold text-foreground">
+                {churches.length}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Registered on platform
+              </p>
+            </CardContent>
+          </Card>
 
-      <main className="container mx-auto px-4 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <Building2 className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Churches</p>
-                  <p className="text-2xl font-bold">{churches.length}</p>
-                </div>
-              </div>
+          <Card className="bg-gradient-to-br from-gold-light/20 to-gold-light/5 border-primary/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                Pending Approval
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="font-display text-3xl font-bold text-foreground">
+                {pendingCount}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Awaiting review
+              </p>
             </CardContent>
           </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-amber-500/10">
-                  <Clock className="h-6 w-6 text-amber-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Pending Approval</p>
-                  <p className="text-2xl font-bold">{pendingCount}</p>
-                </div>
-              </div>
+
+          <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Check className="w-4 h-4" />
+                Active Churches
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="font-display text-3xl font-bold text-foreground">
+                {activeCount}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Currently live
+              </p>
             </CardContent>
           </Card>
+
           <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-green-500/10">
-                  <Check className="h-6 w-6 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Active Churches</p>
-                  <p className="text-2xl font-bold">{activeCount}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-blue-500/10">
-                  <Users className="h-6 w-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Members</p>
-                  <p className="text-2xl font-bold">{totalMembers}</p>
-                </div>
-              </div>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                Total Members
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="font-display text-3xl font-bold text-foreground">
+                {totalMembers}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Across all churches
+              </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Churches Table */}
+        {/* Churches Table Card - Matching Dashboard Style */}
         <Card>
-          <CardHeader>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <CardTitle>Church Management</CardTitle>
-                <CardDescription>Review and manage church registrations</CardDescription>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant={statusFilter === 'all' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setStatusFilter('all')}
-                >
-                  All
-                </Button>
-                <Button
-                  variant={statusFilter === 'pending' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setStatusFilter('pending')}
-                >
-                  Pending ({pendingCount})
-                </Button>
-                <Button
-                  variant={statusFilter === 'active' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setStatusFilter('active')}
-                >
-                  Active
-                </Button>
-                <Button
-                  variant={statusFilter === 'rejected' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setStatusFilter('rejected')}
-                >
-                  Rejected
-                </Button>
-              </div>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="font-display text-lg">Church Management</CardTitle>
+              <CardDescription>Review and manage church registrations</CardDescription>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant={statusFilter === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setStatusFilter('all')}
+              >
+                All
+              </Button>
+              <Button
+                variant={statusFilter === 'pending' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setStatusFilter('pending')}
+              >
+                Pending ({pendingCount})
+              </Button>
+              <Button
+                variant={statusFilter === 'active' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setStatusFilter('active')}
+              >
+                Active
+              </Button>
+              <Button
+                variant={statusFilter === 'rejected' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setStatusFilter('rejected')}
+              >
+                Rejected
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
@@ -309,7 +301,7 @@ const PlatformAdmin = () => {
                   </TableHeader>
                   <TableBody>
                     {filteredChurches.map((church) => (
-                      <TableRow key={church.id}>
+                      <TableRow key={church.id} className="hover:bg-muted/50">
                         <TableCell className="font-medium">{church.name}</TableCell>
                         <TableCell>
                           {[church.city, church.state, church.country].filter(Boolean).join(', ') || '—'}
@@ -334,7 +326,7 @@ const PlatformAdmin = () => {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                  className="text-accent hover:text-accent hover:bg-accent/10"
                                   onClick={() => openDialog(church, 'approve')}
                                 >
                                   <Check className="h-4 w-4" />
@@ -342,7 +334,7 @@ const PlatformAdmin = () => {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                  className="text-destructive hover:text-destructive hover:bg-destructive/10"
                                   onClick={() => openDialog(church, 'reject')}
                                 >
                                   <X className="h-4 w-4" />
@@ -359,13 +351,13 @@ const PlatformAdmin = () => {
             )}
           </CardContent>
         </Card>
-      </main>
+      </div>
 
       {/* View Dialog */}
       <Dialog open={actionType === 'view'} onOpenChange={() => closeDialog()}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Church Details</DialogTitle>
+            <DialogTitle className="font-display">Church Details</DialogTitle>
             <DialogDescription>Full information about this church</DialogDescription>
           </DialogHeader>
           {selectedChurch && (
@@ -435,7 +427,7 @@ const PlatformAdmin = () => {
       <Dialog open={actionType === 'approve'} onOpenChange={() => closeDialog()}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Approve Church</DialogTitle>
+            <DialogTitle className="font-display">Approve Church</DialogTitle>
             <DialogDescription>
               Are you sure you want to approve {selectedChurch?.name}? This will make the church active and visible to users.
             </DialogDescription>
@@ -456,17 +448,17 @@ const PlatformAdmin = () => {
       <Dialog open={actionType === 'reject'} onOpenChange={() => closeDialog()}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Reject Church</DialogTitle>
+            <DialogTitle className="font-display">Reject Church</DialogTitle>
             <DialogDescription>
               Are you sure you want to reject {selectedChurch?.name}?
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
             <Textarea
-              placeholder="Reason for rejection (optional)"
+              placeholder="Optional: Provide a reason for rejection..."
               value={rejectionReason}
               onChange={(e) => setRejectionReason(e.target.value)}
-              rows={3}
+              className="min-h-[100px]"
             />
           </div>
           <DialogFooter>
@@ -480,7 +472,7 @@ const PlatformAdmin = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </AdminLayout>
   );
 };
 

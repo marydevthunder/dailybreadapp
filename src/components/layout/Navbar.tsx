@@ -2,7 +2,23 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, LogOut, User, Settings, LayoutDashboard, Church } from "lucide-react";
+import { 
+  Menu, 
+  LogOut, 
+  User, 
+  Settings, 
+  LayoutDashboard, 
+  Church, 
+  History, 
+  HelpCircle, 
+  CreditCard,
+  ChevronDown,
+  Shield,
+  Building2,
+  Users,
+  DollarSign,
+  QrCode,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -10,15 +26,31 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import breadLogo from "@/assets/bread-logo.png";
+
+type UserRole = "admin" | "church_admin" | "member" | null;
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [userRole, setUserRole] = useState<UserRole>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, signOut, loading } = useAuth();
@@ -32,13 +64,38 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Fetch user role
+  useEffect(() => {
+    if (user) {
+      fetchUserRole();
+    } else {
+      setUserRole(null);
+    }
+  }, [user]);
+
+  const fetchUserRole = async () => {
+    if (!user) return;
+    
+    try {
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      
+      setUserRole(data?.role || "member");
+    } catch (error) {
+      setUserRole("member");
+    }
+  };
+
   const isActive = (path: string) => location.pathname === path;
 
-  const navLinks = [
+  // Public navigation links (logged out)
+  const publicNavLinks = [
     { name: "Home", path: "/" },
     { name: "How It Works", path: "/how-it-works" },
     { name: "For Churches", path: "/for-churches" },
-    { name: "Pricing", path: "/pricing" },
   ];
 
   const handleSignOut = async () => {
@@ -52,6 +109,114 @@ const Navbar = () => {
       return `${user.user_metadata.first_name[0]}${user.user_metadata.last_name[0]}`.toUpperCase();
     }
     return user?.email?.[0]?.toUpperCase() || "U";
+  };
+
+  // Member navigation structure
+  const memberNavItems = [
+    { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  ];
+
+  const memberGivingItems = [
+    { icon: Church, label: "My Church", path: "/dashboard/my-church" },
+    { icon: CreditCard, label: "Giving Settings", path: "/dashboard/settings" },
+  ];
+
+  const memberOtherItems = [
+    { icon: History, label: "Activity", path: "/dashboard/activity" },
+    { icon: User, label: "Profile", path: "/dashboard/profile" },
+    { icon: HelpCircle, label: "Support", path: "/help" },
+  ];
+
+  // Church Admin navigation
+  const churchAdminItems = [
+    { icon: LayoutDashboard, label: "Dashboard", path: "/church-admin" },
+    { icon: Users, label: "Members", path: "/church-admin/members" },
+    { icon: DollarSign, label: "Donations", path: "/church-admin/donations" },
+    { icon: QrCode, label: "Launch Kit", path: "/church-onboarding-kit" },
+    { icon: Settings, label: "Settings", path: "/church-admin/settings" },
+    { icon: HelpCircle, label: "Support", path: "/help" },
+  ];
+
+  // Platform Admin navigation
+  const platformAdminItems = [
+    { icon: Shield, label: "Admin Dashboard", path: "/admin" },
+    { icon: Building2, label: "Churches", path: "/admin" },
+    { icon: Users, label: "Members", path: "/admin" },
+    { icon: DollarSign, label: "Donations", path: "/admin" },
+    { icon: Settings, label: "Global Settings", path: "/admin" },
+  ];
+
+  const renderMobileNav = () => {
+    if (userRole === "admin") {
+      return platformAdminItems.map((item) => (
+        <Link
+          key={item.path + item.label}
+          to={item.path}
+          onClick={() => setIsOpen(false)}
+          className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
+        >
+          <item.icon className="w-5 h-5 mr-3" />
+          {item.label}
+        </Link>
+      ));
+    }
+
+    if (userRole === "church_admin") {
+      return churchAdminItems.map((item) => (
+        <Link
+          key={item.path + item.label}
+          to={item.path}
+          onClick={() => setIsOpen(false)}
+          className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
+        >
+          <item.icon className="w-5 h-5 mr-3" />
+          {item.label}
+        </Link>
+      ));
+    }
+
+    // Default member nav
+    return (
+      <>
+        {memberNavItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            onClick={() => setIsOpen(false)}
+            className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
+          >
+            <item.icon className="w-5 h-5 mr-3" />
+            {item.label}
+          </Link>
+        ))}
+        <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          Giving
+        </div>
+        {memberGivingItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            onClick={() => setIsOpen(false)}
+            className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
+          >
+            <item.icon className="w-5 h-5 mr-3" />
+            {item.label}
+          </Link>
+        ))}
+        <div className="h-px bg-border my-2 mx-4" />
+        {memberOtherItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            onClick={() => setIsOpen(false)}
+            className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
+          >
+            <item.icon className="w-5 h-5 mr-3" />
+            {item.label}
+          </Link>
+        ))}
+      </>
+    );
   };
 
   return (
@@ -79,20 +244,163 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                  isActive(link.path)
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                )}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {!user ? (
+              // Public nav for logged out users
+              publicNavLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive(link.path)
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              ))
+            ) : userRole === "admin" ? (
+              // Platform Admin nav
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <Link
+                      to="/admin"
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                        location.pathname.startsWith("/admin")
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      )}
+                    >
+                      Admin Dashboard
+                    </Link>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            ) : userRole === "church_admin" ? (
+              // Church Admin nav
+              <>
+                <Link
+                  to="/church-admin"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/church-admin")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/church-admin/members"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/church-admin/members")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Members
+                </Link>
+                <Link
+                  to="/church-admin/donations"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/church-admin/donations")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Donations
+                </Link>
+                <Link
+                  to="/church-onboarding-kit"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/church-onboarding-kit")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Launch Kit
+                </Link>
+              </>
+            ) : (
+              // Member nav with Giving dropdown
+              <>
+                <Link
+                  to="/dashboard"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/dashboard")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Dashboard
+                </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className={cn(
+                    "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    (isActive("/dashboard/my-church") || isActive("/dashboard/settings"))
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}>
+                    Giving
+                    <ChevronDown className="w-4 h-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem asChild>
+                      <Link to="/dashboard/my-church" className="flex items-center gap-2">
+                        <Church className="w-4 h-4" />
+                        My Church
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/dashboard/settings" className="flex items-center gap-2">
+                        <CreditCard className="w-4 h-4" />
+                        Giving Settings
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Link
+                  to="/dashboard/activity"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/dashboard/activity")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Activity
+                </Link>
+                <Link
+                  to="/dashboard/profile"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/dashboard/profile")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/help"
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive("/help")
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  Support
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Desktop CTA */}
@@ -125,16 +433,26 @@ const Navbar = () => {
                     </div>
                   </div>
                   <DropdownMenuSeparator />
+                  {userRole === "admin" && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin" className="cursor-pointer">
+                        <Shield className="mr-2 h-4 w-4" />
+                        Admin Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  {userRole === "church_admin" && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/church-admin" className="cursor-pointer">
+                        <Building2 className="mr-2 h-4 w-4" />
+                        Church Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem asChild>
                     <Link to="/dashboard" className="cursor-pointer">
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       Dashboard
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/dashboard/my-church" className="cursor-pointer">
-                      <Church className="mr-2 h-4 w-4" />
-                      My Church
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -212,57 +530,29 @@ const Navbar = () => {
                 {/* Mobile Links */}
                 <div className="flex-1 overflow-auto py-4">
                   <div className="px-2 space-y-1">
-                    {navLinks.map((link) => (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        onClick={() => setIsOpen(false)}
-                        className={cn(
-                          "flex items-center px-4 py-3 rounded-lg text-base font-medium transition-colors",
-                          isActive(link.path)
-                            ? "bg-primary/10 text-primary"
-                            : "text-foreground hover:bg-muted"
-                        )}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                    
-                    {user && (
+                    {!user ? (
+                      // Public nav for logged out
+                      <>
+                        {publicNavLinks.map((link) => (
+                          <Link
+                            key={link.path}
+                            to={link.path}
+                            onClick={() => setIsOpen(false)}
+                            className={cn(
+                              "flex items-center px-4 py-3 rounded-lg text-base font-medium transition-colors",
+                              isActive(link.path)
+                                ? "bg-primary/10 text-primary"
+                                : "text-foreground hover:bg-muted"
+                            )}
+                          >
+                            {link.name}
+                          </Link>
+                        ))}
+                      </>
+                    ) : (
                       <>
                         <div className="h-px bg-border my-3 mx-4" />
-                        <Link
-                          to="/dashboard"
-                          onClick={() => setIsOpen(false)}
-                          className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
-                        >
-                          <LayoutDashboard className="w-5 h-5 mr-3" />
-                          Dashboard
-                        </Link>
-                        <Link
-                          to="/dashboard/my-church"
-                          onClick={() => setIsOpen(false)}
-                          className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
-                        >
-                          <Church className="w-5 h-5 mr-3" />
-                          My Church
-                        </Link>
-                        <Link
-                          to="/dashboard/profile"
-                          onClick={() => setIsOpen(false)}
-                          className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
-                        >
-                          <User className="w-5 h-5 mr-3" />
-                          Profile
-                        </Link>
-                        <Link
-                          to="/dashboard/settings"
-                          onClick={() => setIsOpen(false)}
-                          className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted"
-                        >
-                          <Settings className="w-5 h-5 mr-3" />
-                          Settings
-                        </Link>
+                        {renderMobileNav()}
                       </>
                     )}
                   </div>
